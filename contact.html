@@ -15,11 +15,16 @@
     <div class="mt-8 grid gap-6 lg:grid-cols-2">
       <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 class="text-xl font-semibold text-emerald-700">Форма обратной связи</h2>
-        <form class="mt-4 space-y-4">
-          <input type="text" placeholder="Ваше имя" class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 outline-none focus:border-emerald-400" />
-          <input type="email" placeholder="Email" class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 outline-none focus:border-emerald-400" />
-          <textarea rows="5" placeholder="Сообщение" class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 outline-none focus:border-emerald-400"></textarea>
-          <button type="submit" class="rounded-lg bg-emerald-500 px-5 py-3 font-semibold text-slate-900 hover:bg-emerald-400">Отправить</button>
+        
+        <form id="feedbackForm" class="mt-4 space-y-4">
+          <input type="text" name="name" placeholder="Ваше имя" required class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 outline-none focus:border-emerald-400" />
+          <input type="email" name="email" placeholder="Email" required class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 outline-none focus:border-emerald-400" />
+          <textarea name="message" rows="5" placeholder="Сообщение" required class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 outline-none focus:border-emerald-400"></textarea>
+          
+          <div class="flex items-center gap-4">
+            <button type="submit" class="rounded-lg bg-emerald-500 px-5 py-3 font-semibold text-slate-900 hover:bg-emerald-400">Отправить</button>
+            <div id="formStatus" class="text-sm font-medium"></div>
+          </div>
         </form>
       </section>
       <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -33,5 +38,29 @@
   <button data-back-to-top class="fixed bottom-6 right-6 rounded-full bg-emerald-500 px-4 py-3 text-sm font-semibold text-slate-900 opacity-0 pointer-events-none shadow-sm">Вверх</button>
   <script src="assets/data.js"></script>
   <script src="assets/main.js"></script>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyWSOmPm4Af5s10pHmGwurXZikKxs_bDoVdfvz5jDDn6pgUfy-rs4-hN1qD0nxZNEiG/exec';
+    const form = document.getElementById('feedbackForm');
+    const statusMessage = document.getElementById('formStatus');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      statusMessage.style.color = '#007bff'; // Синий цвет при отправке
+      statusMessage.textContent = 'Отправка данных...';
+      
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+           statusMessage.style.color = '#10b981'; // Изумрудный цвет Tailwind при успехе
+           statusMessage.textContent = 'Успешно! График отправлен на вашу почту.';
+           form.reset();
+        })
+        .catch(error => {
+           statusMessage.style.color = '#ef4444'; // Красный цвет при ошибке
+           statusMessage.textContent = 'Ошибка отправки. Попробуйте еще раз.';
+           console.error('Error!', error.message);
+        });
+    });
+  </script>
 </body>
 </html>
