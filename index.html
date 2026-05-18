@@ -30,7 +30,7 @@
     <section class="mx-auto grid max-w-7xl gap-10 px-4 py-16 lg:grid-cols-2">
       <div>
         <p class="inline-flex rounded-full bg-emerald-500/20 px-3 py-1 text-sm text-emerald-600 font-medium">AI + Seasonal Forecasting</p>
-        <h1 class="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl">Модель прогнозирования спроса на сезонный товар</h1>
+        <h1 class="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl">Модель прогнозирования спроса на seasonal товар</h1>
         <p class="mt-5 text-slate-600">Проект построен на ваших данных за 2015–2022 и показывает, как AI-подход снижает излишки и дефицит товара в сезонные пики.</p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a href="analysis.html" class="rounded-xl bg-emerald-500 px-5 py-3 font-semibold text-slate-900 hover:bg-emerald-400">Смотреть анализ</a>
@@ -149,7 +149,6 @@
           pauseIcon.classList.remove('hidden');
           btnText.textContent = 'Пауза';
         } else {
-          audio.dash(); // В JS используется метод pause()
           audio.pause();
           playIcon.classList.remove('hidden');
           pauseIcon.classList.add('hidden');
